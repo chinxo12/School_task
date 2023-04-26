@@ -85,7 +85,7 @@ namespace school.Controllers
                     }
 
                 }
-                if (count > 1000 || countF>1000)
+                if (count > user.Class.Faculty.School.Capacity || countF> user.Class.Faculty.Capacity)
                 {
                     check = false;
                 }
