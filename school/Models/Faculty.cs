@@ -7,6 +7,7 @@ namespace school.Models
     public class Faculty
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FacultyId { get; set; }
        
         [DisplayName("Khoa")]
@@ -15,10 +16,6 @@ namespace school.Models
         public int Capacity { get; set; }
         [DisplayName("Ngày tạo")]
         public DateTime CreatedDate { get; set; }
-        public int CreatorId { get; set; }
-        [ForeignKey("CreatorId")]
-        [DisplayName("Người tạo")]
-        public User Creator { get; set; }
         public int SchoolId { get; set; }
         [ForeignKey("SchoolId")]
         public School School { get; set; }

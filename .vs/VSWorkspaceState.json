@@ -3,9 +3,8 @@
     "",
     "\\school",
     "\\school\\Controllers",
-    "\\school\\Data",
     "\\school\\Models"
   ],
-  "SelectedNode": "\\school\\Models\\Faculty.cs",
+  "SelectedNode": "\\school\\Models\\School.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -6,6 +6,7 @@ namespace school.Models
     public class School
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SchoolId { get; set; }
 
         public string SchoolName { get; set; }

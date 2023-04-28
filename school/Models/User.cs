@@ -6,6 +6,7 @@ namespace school.Models
     public class User
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
 
         public string Username { get; set; }
@@ -17,9 +18,10 @@ namespace school.Models
         public string Password { get; set; }
         public DateTime CreatedDate { get; set; }
         public int CreatorId { get; set; }
-        [ForeignKey("CreatorId")]
-        public User Creator { get; set; }
-        public Roles Role { get; set; }
+       
+        public int? RoleId { get; set; }
+        [ForeignKey("RoleId")]
+        public Role Role { get; set; }
 
         public int? ClassId { get; set; }
         [ForeignKey("ClassId")]

@@ -19,8 +19,9 @@ namespace school.Controllers
         
         public IActionResult Index()
         {
-            List<User> users = _context.Users.ToList();
-            return View(users);
+          /*  List<User> users = _context.Users.ToList();
+            return View(users);*/
+          return View();
         }
 
       
