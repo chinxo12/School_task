@@ -12,6 +12,7 @@ namespace school.Models
         public string ClassName { get; set; }
         public int Capacity { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int CreatorId { get; set; }
         public int FacultyId { get; set; }
         [ForeignKey("FacultyId")]
         public Faculty Faculty { get; set; }

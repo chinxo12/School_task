@@ -16,6 +16,7 @@ namespace school.Models
         public int Capacity { get; set; }
         [DisplayName("Ngày tạo")]
         public DateTime CreatedDate { get; set; }
+        public int CreatorId { get; set; }
         public int SchoolId { get; set; }
         [ForeignKey("SchoolId")]
         public School School { get; set; }

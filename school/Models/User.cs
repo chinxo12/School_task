@@ -18,11 +18,9 @@ namespace school.Models
         public string Password { get; set; }
         public DateTime CreatedDate { get; set; }
         public int CreatorId { get; set; }
-       
         public int? RoleId { get; set; }
         [ForeignKey("RoleId")]
         public Role Role { get; set; }
-
         public int? ClassId { get; set; }
         [ForeignKey("ClassId")]
         public Class Class { get; set; }
