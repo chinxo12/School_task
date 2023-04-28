@@ -1,120 +1,190 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using school.Data;
 using school.Models;
 
 namespace school.Controllers
 {
     public class FacultyController : Controller
     {
-        private readonly List<Faculty> _faculties = new List<Faculty>();
-
-        // Action Index: Hiển thị danh sách khoa
-        public IActionResult Index()
+      private readonly MyDbContext _context;
+        public FacultyController(MyDbContext context)
         {
-            // Lấy danh sách khoa từ cơ sở dữ liệu (hoặc nơi khác)
-            // và truyền vào View để hiển thị
-            return View(_faculties);
+            _context = context;
         }
 
-        // Action Create: Hiển thị giao diện tạo mới khoa
+
+       
+        public IActionResult Index()
+        {
+         
+            return View(_context.Faculties);
+        }
+
         public IActionResult Create()
         {
             return View();
         }
 
-        // Action Create: Xử lý tạo mới khoa từ dữ liệu form
+       
         [HttpPost]
-        public IActionResult Create(Faculty faculty)
+        public IActionResult Create(Faculty faculty,int schoolId)
         {
-            // Lưu khoa vào cơ sở dữ liệu (hoặc nơi khác)
-            _faculties.Add(faculty);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    School school = _context.Schools.Find(schoolId);
+                    if (school != null)
+                    {
+                        if (school.Capacity > faculty.Capacity)
+                        {
+                            faculty.School = school;
+                            faculty.SchoolId = schoolId;
+                            faculty.CreatedDate = DateTime.Now;
+                            _context.Faculties.Add(faculty);
+                            _context.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            return NotFound("Sức chứa của khoa không được lớn hơn sức chứa của trường !!!");
+                        }
+                    }
+                    else
+                    {
+                        return NotFound("Thông tin trường vừa nhập không tồn tại!");
+                    }
 
-            // Chuyển hướng về danh sách khoa sau khi tạo mới thành công
-            return RedirectToAction("Index");
-        }
-
-        // Action Details: Hiển thị thông tin chi tiết khoa
-        public IActionResult Details(int id)
-        {
-            // Tìm kiếm khoa trong cơ sở dữ liệu (hoặc nơi khác) theo id
-            var faculty = _faculties.Find(f => f.FacultyId == id);
-
-            // Kiểm tra khoa có tồn tại không
-            if (faculty == null)
+                }catch (Exception ex)
+                {
+                    return NotFound("Có lỗi trong quá trình xử lý vui lòng thử lại !!!");
+                }
+               
+            }
+            else
             {
                 return NotFound();
             }
+          
+        }
 
-            // Truyền dữ liệu khoa vào View để hiển thị
-            return View(faculty);
+    
+        public IActionResult Details(int id)
+        {
+            try
+            {
+                Faculty faculty = _context.Faculties.Find(id);
+                if (faculty == null) {
+                    return NotFound();
+                }
+
+                return View(faculty);
+            }
+            catch(Exception ex)
+            {
+                return NotFound();
+            }        
         }
 
 
         public IActionResult Edit(int id)
         {
-            var faculty = _faculties.Find(f => f.FacultyId == id);
+            try
+            {
+                Faculty faculty = _context.Faculties.Find(id);
+                if (faculty == null)
+                {
+                    return NotFound();
+                }
 
-            if (faculty == null)
+                return View(faculty);
+            }
+            catch (Exception ex)
             {
                 return NotFound();
             }
-
-            // Truyền dữ liệu khoa vào View để hiển thị
-            return View(faculty);
         }
 
-        // Action Edit: Xử lý chỉnh sửa khoa từ dữ liệu form
+       
         [HttpPost]
         public IActionResult Edit(int id, Faculty faculty)
         {
-            // Tìm kiếm khoa trong cơ sở dữ liệu (hoặc nơi khác) theo id
-            var facultyToUpdate = _faculties.Find(f => f.FacultyId == id);
-
-            // Kiểm tra khoa có tồn tại không
-            if (facultyToUpdate == null)
+            try
             {
-                return NotFound();
+                Faculty facultyToUpdate = _context.Faculties.Find(id);
+                if (faculty.Capacity < facultyToUpdate.School.Capacity)
+                {
+                    // Tìm kiếm khoa trong cơ sở dữ liệu (hoặc nơi khác) theo id
+
+                    // Kiểm tra khoa có tồn tại không
+                    if (facultyToUpdate == null)
+                    {
+                        return NotFound();
+                    }
+                    facultyToUpdate.FacultyName = faculty.FacultyName;
+                    facultyToUpdate.Capacity = faculty.Capacity;
+                   
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return NotFound("Sức chứa của khoa không được vượt quá sức chứa của trường");
+                }
+                    
+            }
+            catch (Exception ex)
+            {
+                return NotFound("Có lỗi trong quá trình xử lý vui lòng thử lại !!!");
             }
 
-            // Cập nhật thông tin khoa
-            facultyToUpdate.FacultyName = faculty.FacultyName;
-            // Chuyển hướng về danh sách khoa sau khi cập nhật thành công
-            return RedirectToAction("Index");
+            
         }
 
-        // Action Delete: Hiển thị giao diện xác nhận xóa khoa
+       
         public IActionResult Delete(int id)
         {
-            // Tìm kiếm khoa trong cơ sở dữ liệu (hoặc nơi khác) theo id
-            var faculty = _faculties.Find(f => f.FacultyId == id);
-
-            // Kiểm tra khoa có tồn tại không
-            if (faculty == null)
+            try
             {
-                return NotFound();
-            }
+                Faculty faculty = _context.Faculties.Find(id);
+                if (faculty == null)
+                {
+                    return NotFound();
+                }
 
-            // Truyền dữ liệu khoa vào View để hiển thị
-            return View(faculty);
+                return View(faculty);
+            }
+            catch (Exception ex)
+            {
+                return NotFound("Có lỗi trong quá trình xử lý vui lòng thử lại !!!");
+            }
         }
 
         // Action Delete: Xử lý xóa khoa
         [HttpPost]
         public IActionResult Delete(int id, bool confirm)
         {
-            // Tìm kiếm khoa trong cơ sở dữ liệu (hoặc nơi khác) theo id
-            var faculty = _faculties.Find(f => f.FacultyId == id);
-
-            // Kiểm tra khoa có tồn tại không
-            if (faculty == null)
+            if (!confirm)
             {
-                return NotFound();
+                return RedirectToAction("Index");
+            }
+            try
+            {
+                Faculty faculty = _context.Faculties.Find(id);
+
+                if (faculty == null)
+                {
+                    return NotFound("Không tìm thấy dữ liệu từ Id này!");
+                }
+
+                _context.Faculties.Remove(faculty);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                return NotFound("Có lỗi trong quá trình xử lý vui lòng thử lại !!!");
             }
 
-            // Xóa khoa khỏi cơ sở dữ liệu (hoặc nơi khác)
-            _faculties.Remove(faculty);
-
-            // Chuyển hướng về danh sách khoa sau khi xóa thành công
-            return RedirectToAction("Index");
         }
 
     }
