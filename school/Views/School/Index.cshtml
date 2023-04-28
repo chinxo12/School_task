@@ -1,0 +1,33 @@
+﻿@model IEnumerable<school.Models.School>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên trường học</th>
+            <th>Địa chỉ</th>
+            <th>Sức chứa</th>
+            <th>Thời gian thành lập</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.SchoolId</td>
+            <td>@item.SchoolName</td>
+            <td>@item.Address</td>
+            <td>@item.Capacity</td>
+            <td>@item.FoundedTime</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.SchoolId">Details</a> |
+                <a asp-action="Edit" asp-route-id="@item.SchoolId">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.SchoolId">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a asp-action="Create">Create New</a>

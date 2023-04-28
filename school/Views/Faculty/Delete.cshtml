@@ -1,0 +1,26 @@
+﻿@model Faculty
+
+<h2>Xóa Khoa</h2>
+
+<p>Bạn có chắc chắn muốn xóa khoa này?</p>
+
+<div>
+    <h4>Thông tin khoa:</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Mã khoa:</dt>
+        <dd class="col-sm-9">@Model.FacultyId</dd>
+
+        <dt class="col-sm-3">Tên khoa:</dt>
+        <dd class="col-sm-9">@Model.FacultyName</dd>
+    </dl>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="FacultyId" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Xóa" class="btn btn-default" />
+                <a asp-action="Index" class="btn btn-default">Hủy</a>
+            </div>
+        </div>
+    </form>
+</div>

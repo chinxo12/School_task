@@ -14,7 +14,7 @@ namespace school.Controllers
             _context = context;
         }
 
-        // Action Index: Hiển thị danh sách lớp học
+     
         public IActionResult Index()
         {
 
@@ -23,11 +23,11 @@ namespace school.Controllers
 
         public IActionResult Create()
         {
-
+            ViewBag.School = _context.Schools;
             return View();
         }
 
-        // Action Create: Xử lý tạo mới lớp học từ dữ liệu form
+
         [HttpPost]
         public IActionResult Create(Class @class, int facultyId)
         {
@@ -40,7 +40,14 @@ namespace school.Controllers
                     if (faculty != null)
                     {
                         @class.Faculty = faculty;
-                        if (faculty.Capacity<@class.Capacity) {
+
+                        var totalCapacity = _context.Classes
+                                            .Where(c => c.FacultyId == faculty.FacultyId)
+                                            .Sum(c => c.Capacity);
+                        // Kiểm tra tổng sức chứa của lớp và khoa
+
+                        if (faculty.Capacity < totalCapacity + @class.Capacity)
+                        {
                             return NotFound("Sức chứa của lớp không được vượt quá sức chứa của khoa!");
                         }
                         _context.Classes.Add(@class);
@@ -66,6 +73,20 @@ namespace school.Controllers
             return View(@class);
         }
 
+        public IActionResult Detail(int classId)
+        {
+            try
+            {
+                var @class = _context.Classes.Find(classId);
+                return View(@class);
+
+            }catch (Exception e)
+            {
+                return NotFound("có lỗi trong quá trình xử lý vui lòng thử lại!");
+            }
+            
+        }
+
 
         public IActionResult Edit(int id)
         {
@@ -77,6 +98,8 @@ namespace school.Controllers
                 {
                     return NotFound();
                 }
+                ViewBag.School = _context.Schools;
+                ViewBag.Faculty = _context.Faculties;
                 return View(@class);
             }
             catch (Exception e)
@@ -103,9 +126,15 @@ namespace school.Controllers
                     return NotFound("Khôn tồn tại khoa này!");
                 }
                 classToUpdate.Faculty = faculty;
-                
+
                 classToUpdate.ClassName = @class.ClassName;
-                if (faculty.Capacity < @class.Capacity)
+
+                var totalCapacity = _context.Classes
+                                    .Where(c => c.FacultyId == faculty.FacultyId)
+                                    .Sum(c => c.Capacity);
+
+                // Kiểm tra tổng sức chứa của lớp với sức chứa của khoa
+                if (faculty.Capacity < totalCapacity+@class.Capacity)
                 {
                     return NotFound("Sức chứa của lớp không được vượt quá sức chứa của khoa!");
                 }
@@ -116,10 +145,10 @@ namespace school.Controllers
             {
                 return NotFound("có lỗi trong quá trình xử lý vui lòng thử lại!");
             }
-          
+
         }
 
-        
+
         public IActionResult Delete(int id)
         {
             try
@@ -139,10 +168,10 @@ namespace school.Controllers
             {
                 return NotFound("có lỗi trong quá trình xử lý vui lòng thử lại!");
             }
-           
+
         }
 
-      
+
         [HttpPost]
         public IActionResult Delete(int id, bool confirm)
         {
@@ -161,14 +190,19 @@ namespace school.Controllers
                     _context.SaveChanges();
                 }
 
-         
+
                 return RedirectToAction("Index");
             }
             catch (Exception e)
             {
                 return NotFound("có lỗi trong quá trình xử lý vui lòng thử lại!");
             }
-           
+
+        }
+        public IActionResult GetFacultiesBySchoolId(int schoolId)
+        {
+            var faculties = _context.Faculties.Where(f => f.SchoolId == schoolId).ToList();
+            return PartialView("_FacultyList", faculties);
         }
     }
 }

@@ -1,0 +1,45 @@
+﻿@model Faculty
+
+<h1>Faculty Details</h1>
+
+<div>
+    <h4>FacultyName: @Model.FacultyName</h4>
+    <hr  />
+    <dl class="row">
+        <dt class="col-sm-2">
+            ID
+        </dt>
+        <dd class="col-sm-10">
+            @Model.FacultyId
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Sức chứa
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Capacity
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Ngày thành lập
+        </dt>
+        <dd class="col-sm-10">
+            @Model.CreatedDate
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Tên Trường
+        </dt>
+        <dd class="col-sm-10">
+            @Model.School.SchoolName
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.FacultyId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

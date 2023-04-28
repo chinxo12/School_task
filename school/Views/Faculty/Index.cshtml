@@ -1,0 +1,37 @@
+﻿@model IEnumerable<school.Models.Faculty>
+
+<h2>Faculty List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Tên Khoa</th>
+            <th>Sức chứa</th>
+            <th>Tên trường</th>
+            <th>Ngày thành lập</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.FacultyId)</td>
+                <td>@Html.DisplayFor(modelItem => item.FacultyName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Capacity)</td>
+                <td>@Html.DisplayFor(modelItem => item.School.SchoolName)</td>
+                <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.FacultyId }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.FacultyId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.FacultyId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
