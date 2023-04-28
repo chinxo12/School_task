@@ -22,10 +22,12 @@ namespace school.Controllers
 
         public IActionResult Create()
         {
+            ViewBag.Schools = _context.Schools;
             return View();
         }
 
-       
+
+
         [HttpPost]
         public IActionResult Create(Faculty faculty,int schoolId)
         {
@@ -36,7 +38,11 @@ namespace school.Controllers
                     School school = _context.Schools.Find(schoolId);
                     if (school != null)
                     {
-                        if (school.Capacity > faculty.Capacity)
+                        int total = _context.Faculties
+                                    .Where(c => c.SchoolId == school.SchoolId)
+                                    .Sum(c => c.Capacity);
+
+                        if (school.Capacity > total+faculty.Capacity)
                         {
                             faculty.School = school;
                             faculty.SchoolId = schoolId;
@@ -96,7 +102,7 @@ namespace school.Controllers
                 {
                     return NotFound();
                 }
-
+                ViewBag.School = _context.Schools;
                 return View(faculty);
             }
             catch (Exception ex)
@@ -107,23 +113,29 @@ namespace school.Controllers
 
        
         [HttpPost]
-        public IActionResult Edit(int id, Faculty faculty)
+        public IActionResult Edit(int id, Faculty faculty,int schoolId)
         {
             try
             {
-                Faculty facultyToUpdate = _context.Faculties.Find(id);
-                if (faculty.Capacity < facultyToUpdate.School.Capacity)
+                School school = _context.Schools.Find(schoolId);
+                if (school == null)
                 {
-                    // Tìm kiếm khoa trong cơ sở dữ liệu (hoặc nơi khác) theo id
-
-                    // Kiểm tra khoa có tồn tại không
+                    return NotFound();
+                }
+                Faculty facultyToUpdate = _context.Faculties.Find(id);
+                int total = _context.Faculties
+                                   .Where(c => c.SchoolId == school.SchoolId)
+                                   .Sum(c => c.Capacity);
+                if (total+faculty.Capacity < facultyToUpdate.School.Capacity)
+                {
+               
                     if (facultyToUpdate == null)
                     {
                         return NotFound();
                     }
                     facultyToUpdate.FacultyName = faculty.FacultyName;
                     facultyToUpdate.Capacity = faculty.Capacity;
-                   
+                    facultyToUpdate.School = school;
                     return RedirectToAction("Index");
                 }
                 else
