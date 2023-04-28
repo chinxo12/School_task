@@ -1,0 +1,48 @@
+﻿@model school.Models.School
+
+<div>
+    <h4>School</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Id:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SchoolId)
+        </dd>
+        <dt class="col-sm-2">
+            Tên trường học:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SchoolName)
+        </dd>
+        <dt class="col-sm-2">
+           Địa chỉ:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class="col-sm-2">
+            Sức chứa:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Capacity)
+        </dd>
+        <dt class="col-sm-2">
+           Thời gian thành lập:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FoundedTime)
+        </dd>
+        <dt class="col-sm-2">
+           Người sáng lập:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Creator.FullName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+   

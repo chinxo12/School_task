@@ -105,7 +105,7 @@ namespace school.Controllers
                     return NotFound();
                 }
 
-
+                var listSchool = _context.Schools;
                 return View(school);
 
             }
@@ -179,6 +179,7 @@ namespace school.Controllers
         [HttpPost]
         public IActionResult Delete(int id, bool confirm)
         {
+           
             try
             {
                 if (confirm)
