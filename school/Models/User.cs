@@ -16,7 +16,7 @@ namespace school.Models
         public bool IsDeleted { get; set; }
         public string Password { get; set; }
         public DateTime CreatedDate { get; set; }
-      
+      public int CreatorId { get; set; }
         public Roles Role { get; set; }
 
         public int? ClassId { get; set; }
