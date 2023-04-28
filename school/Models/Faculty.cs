@@ -16,9 +16,7 @@ namespace school.Models
         [DisplayName("Ngày tạo")]
         public DateTime CreatedDate { get; set; }
         public int CreatorId { get; set; }
-        [ForeignKey("CreatorId")]
-        [DisplayName("Người tạo")]
-        public User Creator { get; set; }
+       
         public int SchoolId { get; set; }
         [ForeignKey("SchoolId")]
         public School School { get; set; }
