@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace school.Models
 {
-    public class Role
+    public class Roles
     {
         [Key]
   

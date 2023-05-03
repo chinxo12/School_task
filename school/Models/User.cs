@@ -20,7 +20,7 @@ namespace school.Models
         public int CreatorId { get; set; }
         public int? RoleId { get; set; }
         [ForeignKey("RoleId")]
-        public Role Role { get; set; }
+        public Roles Role { get; set; }
         public int? ClassId { get; set; }
         [ForeignKey("ClassId")]
         public Class Class { get; set; }
