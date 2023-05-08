@@ -5,7 +5,7 @@
 <form asp-action="Edit" method="post">
    <div class="form-group">
         <label asp-for="FacultyId"></label>
-        <input type="text" value="@Model.FacultyId" asp-for="FacultyId"  class="form-control" />
+        <input type="text" value="@Model.FacultyId" asp-for="FacultyId" readonly class="form-control" />
         <span asp-validation-for="FacultyId" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -22,12 +22,11 @@
     <div class="form-group">
     <label asp-for="SchoolId" class="control-label"></label>
     <select asp-for="SchoolId" class="form-control">
-    @foreach (var school in (IEnumerable<School>)ViewBag.Schools)
-    {
-       <option value="@school.SchoolId" selected="@((school.SchoolId == Model.School.SchoolId) ? "selected" : null)">@school.SchoolName</option>
-
-    }
-    </select>
+@foreach (var school in (IEnumerable<School>)ViewBag.Schools)
+{
+    <option value="@school.SchoolId" selected="@((Model.School != null && school.SchoolId == Model.School.SchoolId) ? "selected" : null)">@school.SchoolName</option>
+}
+</select>
     <span asp-validation-for="SchoolId" class="text-danger"></span>
 </div>
         <input type="submit" value="Save" class="btn btn-primary" />

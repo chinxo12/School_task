@@ -1,8 +1,8 @@
 ﻿@model school.Models.User
 
-<h2>Create User</h2>
+<h2>Create Student</h2>
 
-<form asp-action="Create">
+<form asp-action="Create" method="post">
     <div class="form-group">
         <label asp-for="Username" class="control-label"></label>
         <input asp-for="Username" class="form-control" />
@@ -18,6 +18,17 @@
         <input asp-for="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
+     <div class="form-group">
+                <label asp-for="ClassId" class="control-label"></label>
+                <select asp-for="ClassId" class="form-control">
+                    <option>choose Class</option>
+                    @foreach (var c in (IEnumerable<Class>)ViewBag.Class)
+                    {
+                        <option value="@c.ClassId">@c.ClassName</option>
+                    }
+                </select>
+                <span asp-validation-for="ClassId" class="text-danger"></span>
+            </div>
     <div class="form-group">
         <input type="submit" value="Create" class="btn btn-primary" />
     </div>
