@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using school.Data;
 using school.Models;
+using X.PagedList;
 
 namespace school.Controllers
 {
@@ -14,9 +15,10 @@ namespace school.Controllers
         }
 
 
-        public IActionResult Index()
+        public IActionResult Index(int page=1)
         {
-
+            int pageSize = 10;
+            var schools = _context.Schools.OrderBy(x => x.SchoolId).ToPagedList(page,pageSize);
             return View(_context.Schools);
         }
 
