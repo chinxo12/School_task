@@ -76,8 +76,9 @@ namespace school.Controllers
                 {
                     return NotFound();
                 }
+                var creator = _context.Users.First();
+                school.Creator = creator;
 
-            
                 return View(school);
 
             }
@@ -107,7 +108,7 @@ namespace school.Controllers
                     return NotFound();
                 }
 
-                var listSchool = _context.Schools;
+      
                 return View(school);
 
             }
