@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using school.Data;
 using school.Models;
-
+using X.PagedList;
 
 namespace school.Controllers
 {
@@ -19,9 +19,10 @@ namespace school.Controllers
         
         public IActionResult Index()
         {
-          /*  List<User> users = _context.Users.ToList();
-            return View(users);*/
-          return View();
+         
+            return View(_context.Users);
+
+
         }
 
       
