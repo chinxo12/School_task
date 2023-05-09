@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using school.Data;
 using school.Models;
 using System.Security.Claims;
+using X.PagedList;
 
 namespace school.Controllers
 {
@@ -16,13 +17,16 @@ namespace school.Controllers
         }
 
 
-        public IActionResult Index()
+        public IActionResult Index(int page=1)
         {
+            int pageSize = 3;
+            var _classes = _context.Classes.Include(c => c.Faculty).OrderBy(x => x.ClassId).ToPagedList(page, pageSize);
+           
+            return View(_classes);
 
+           /* var classes = _context.Classes.Include(c => c.Faculty).ToList();
 
-            var classes = _context.Classes.Include(c => c.Faculty).ToList();
-
-            return View(classes);
+            return View(classes);*/
         }
 
         public IActionResult Create()
@@ -33,7 +37,7 @@ namespace school.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(Class @class, int facultyId)
+        public IActionResult Create(Class _class, int facultyId)
         {
 
 
@@ -42,21 +46,22 @@ namespace school.Controllers
                 Faculty faculty = _context.Faculties.Find(facultyId);
                 if (faculty != null)
                 {
-                    @class.Faculty = faculty;
+                    _class.Faculty = faculty;
 
                     var totalCapacity = _context.Classes
                                         .Where(c => c.FacultyId == faculty.FacultyId)
                                         .Sum(c => c.Capacity);
                     // Kiểm tra tổng sức chứa của lớp và khoa
 
-                    if (faculty.Capacity < totalCapacity + @class.Capacity)
+                    if (faculty.Capacity < totalCapacity + _class.Capacity)
                     {
                         return NotFound("Sức chứa của lớp không được vượt quá sức chứa của khoa!");
                     }
                     var creator = _context.Users.First();
-                    @class.CreatedDate = creator.CreatedDate;
-                    @class.CreatorId = creator.CreatorId;
-                    _context.Classes.Add(@class);
+                    _class.CreatedDate = creator.CreatedDate;
+                    _class.CreatorId = creator.CreatorId;
+                    
+                    _context.Classes.Add(_class);
                     _context.SaveChanges();
                     return RedirectToAction("Index");
                 }

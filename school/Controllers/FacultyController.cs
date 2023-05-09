@@ -34,16 +34,14 @@ namespace school.Controllers
         [HttpPost]
         public IActionResult Create(Faculty faculty, int schoolId)
         {
-
             try
             {
                 School school = _context.Schools.Find(schoolId);
                 if (school != null)
                 {
-
                     int total = _context.Faculties
-                                .Where(c => c.SchoolId == school.SchoolId)
-                                .Sum(c => c.Capacity);
+                        .Where(c => c.SchoolId == school.SchoolId)
+                        .Sum(c => c.Capacity);
 
                     if (school.Capacity > total + faculty.Capacity)
                     {
@@ -54,27 +52,29 @@ namespace school.Controllers
                         faculty.CreatorId = creator.UserId;
                         _context.Faculties.Add(faculty);
                         _context.SaveChanges();
+
                         return RedirectToAction("Index");
                     }
                     else
                     {
-                        return NotFound("Sức chứa của khoa không được lớn hơn sức chứa của trường !!!");
+                        ModelState.AddModelError("", "Sức chứa của khoa không được lớn hơn sức chứa của trường !!!");
                     }
                 }
                 else
                 {
-                    return NotFound("Thông tin trường vừa nhập không tồn tại!");
+                    ModelState.AddModelError("", "Thông tin trường vừa nhập không tồn tại!");
                 }
-
             }
             catch (Exception ex)
             {
-                return NotFound("Có lỗi trong quá trình xử lý vui lòng thử lại !!!");
+                ModelState.AddModelError("", "Có lỗi trong quá trình xử lý vui lòng thử lại !!!");
             }
 
-
-
+            // Nếu có lỗi ModelState, hiển thị lại View với lỗi ModelState
+            ViewBag.Schools = _context.Schools.ToList();
+            return View(faculty);
         }
+
 
 
         public IActionResult Details(int id)

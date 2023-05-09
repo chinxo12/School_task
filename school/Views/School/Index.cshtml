@@ -21,13 +21,23 @@
             <td>@item.Capacity</td>
             <td>@item.FoundedTime</td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.SchoolId">Details</a> |
-                <a asp-action="Edit" asp-route-id="@item.SchoolId">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.SchoolId">Delete</a>
+                <div class="btn-group">
+                        <form asp-action="Details" asp-route-id="@item.SchoolId" method="get">
+                            <button type="submit" class="btn btn-primary">Details</button>
+                        </form>
+                        <form asp-action="Edit" asp-route-id="@item.SchoolId" method="get">
+                            <button type="submit" class="btn btn-warning">Edit</button>
+                        </form>
+                        <form asp-action="Delete" asp-route-id="@item.SchoolId" method="get" >
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                </div>
             </td>
         </tr>
     }
     </tbody>
 </table>
 
-<a asp-action="Create">Create New</a>
+ 
+ <button type="button" class="btn btn-primary"  onclick="location.href='@Url.Action("Create")'">Create New</button>
+
