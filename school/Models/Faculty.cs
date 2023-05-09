@@ -11,6 +11,7 @@ namespace school.Models
         public int FacultyId { get; set; }
        
         [DisplayName("Khoa")]
+
         public string FacultyName { get; set; }
         [DisplayName("Sức chứa")]
         public int Capacity { get; set; }

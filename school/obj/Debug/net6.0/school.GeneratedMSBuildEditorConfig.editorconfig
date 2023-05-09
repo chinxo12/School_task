@@ -9,113 +9,113 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = school
 build_property.RootNamespace = school
-build_property.ProjectDir = D:\C#\231\school_task\school\
+build_property.ProjectDir = D:\C#\documents\school\school_task\school\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\C#\231\school_task\school
+build_property.MSBuildProjectDirectory = D:\C#\documents\school\school_task\school
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/C\#/231/school_task/school/Views/Class/Create.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/Class/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xhc3NcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/Class/Delete.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/Class/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xhc3NcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/Class/Details.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/Class/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xhc3NcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/Class/Edit.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/Class/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xhc3NcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/Class/Index.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/Class/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xhc3NcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/Faculty/Create.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/Faculty/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0eVxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/Faculty/Delete.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/Faculty/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0eVxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/Faculty/Details.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/Faculty/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0eVxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/Faculty/Edit.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/Faculty/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0eVxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/Faculty/Index.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/Faculty/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0eVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/School/Create.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/School/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Nob29sXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/School/Delete.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/School/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Nob29sXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/School/Details.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/School/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Nob29sXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/School/Edit.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/School/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Nob29sXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/School/Index.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/School/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Nob29sXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/Shared/Error.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/Shared/_FacultyList.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/Shared/_FacultyList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9GYWN1bHR5TGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/User/Create.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/User/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/User/Delete.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/User/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/User/Details.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/User/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/User/Edit.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/User/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/User/Index.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/User/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/_ViewImports.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/_ViewStart.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\#/231/school_task/school/Views/Shared/_Layout.cshtml]
+[D:/C\#/documents/school/school_task/school/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-scjr4o57wr

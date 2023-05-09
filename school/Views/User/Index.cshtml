@@ -6,10 +6,9 @@
 
 <h2>Users</h2>
 
-<p>
-    <a asp-action="Create">Create New Student</a>
-    <a asp-action="CreateTeacher"> Create New Teacher </a>
-</p>
+<div>
+    <button type="button" class="btn btn-primary"  onclick="location.href='@Url.Action("Create")'">Create New Student</button>
+</div>
 <table class="table">
     <thead>
         <tr>

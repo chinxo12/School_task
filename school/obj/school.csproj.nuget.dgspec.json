@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C#\\231\\school_task\\school\\school.csproj": {}
+    "D:\\C#\\documents\\school\\school_task\\school\\school.csproj": {}
   },
   "projects": {
-    "D:\\C#\\231\\school_task\\school\\school.csproj": {
+    "D:\\C#\\documents\\school\\school_task\\school\\school.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\231\\school_task\\school\\school.csproj",
+        "projectUniqueName": "D:\\C#\\documents\\school\\school_task\\school\\school.csproj",
         "projectName": "school",
-        "projectPath": "D:\\C#\\231\\school_task\\school\\school.csproj",
+        "projectPath": "D:\\C#\\documents\\school\\school_task\\school\\school.csproj",
         "packagesPath": "C:\\Users\\TinTD\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\231\\school_task\\school\\obj\\",
+        "outputPath": "D:\\C#\\documents\\school\\school_task\\school\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
