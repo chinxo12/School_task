@@ -289,3 +289,5 @@ D:\C#\231\school_task\school\bin\Debug\net6.0\JetBrains.Annotations.dll
 D:\C#\231\school_task\school\bin\Debug\net6.0\X.PagedList.dll
 D:\C#\231\school_task\school\bin\Debug\net6.0\X.PagedList.Mvc.Core.dll
 D:\C#\231\school_task\school\obj\Debug\net6.0\school.MvcApplicationPartsAssemblyInfo.cs
+D:\C#\231\school_task\school\bin\Debug\net6.0\PagedList.dll
+D:\C#\231\school_task\school\bin\Debug\net6.0\PagedList.Mvc.dll
