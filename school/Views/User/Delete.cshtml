@@ -1,0 +1,26 @@
+﻿@model User
+
+<h2>Xóa Khoa</h2>
+
+<p>Bạn có chắc chắn muốn xóa @(Model.RoleId==2?" Giáo viên ": " Sinh viên ")  này?</p>
+
+<div>
+    <h4>Thông tin khoa:</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Mã @(Model.RoleId==2?" Giáo viên ": " Sinh viên "):</dt>
+        <dd class="col-sm-9">@Model.UserId</dd>
+
+        <dt class="col-sm-3">Tên @(Model.RoleId==2?" Giáo viên ": " Sinh viên "):</dt>
+        <dd class="col-sm-9">@Model.FullName</dd>
+    </dl>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="UserId" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Xóa" class="btn btn-danger" />
+                <a asp-action="Index" class="btn btn-primary">Hủy</a>
+            </div>
+        </div>
+    </form>
+</div>

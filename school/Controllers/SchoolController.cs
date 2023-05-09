@@ -137,7 +137,7 @@ namespace school.Controllers
                     existingSchool.Address = school.Address;
                     existingSchool.Capacity = school.Capacity;
 
-                    _context.SaveChanges(); // Lưu thay đổi vào cơ sở dữ liệu
+                    _context.SaveChanges(); 
 
                     return RedirectToAction("Index");
                 }

@@ -17,12 +17,11 @@ namespace school.Controllers
         }
 
 
-        public IActionResult Index()
+        public IActionResult Index(int page=1)
         {
-
-            return View(_context.Users);
-
-
+            int pageSize = 10;
+            var users = _context.Users.Include(u => u.Role).OrderBy(u => u.UserId).ToPagedList(page,pageSize);
+            return View(users);
         }
 
 
@@ -46,6 +45,7 @@ namespace school.Controllers
             int count = 0;
             int countF = 0;
             user.CreatedDate = DateTime.Now;
+            user.IsDeleted = false;
             Class classs = _context.Classes.Find(classId);
             if (classs.ClassId == classId)
             {
@@ -109,6 +109,12 @@ namespace school.Controllers
            
         }
 
+        public IActionResult Details(int id)
+        {
+            User user = _context.Users.Find(id);
+           
+            return View(user);
+        }
 
         public IActionResult Edit(int? id)
         {
@@ -151,6 +157,7 @@ namespace school.Controllers
                 {
                     return NotFound("Vượt quá sức chứa của lớp");
                 }
+                updateUser.IsDeleted = user.IsDeleted;
                 updateUser.Class = _class;
                 _context.SaveChanges();
                 return RedirectToAction("Index");
@@ -179,11 +186,10 @@ namespace school.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
+        public IActionResult Delete(int id)
         {
             User user = _context.Users.Find(id);
-            user.IsDeleted = true;
-          
+           _context.Users.Remove(user);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
