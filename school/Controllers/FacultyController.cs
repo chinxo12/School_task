@@ -72,8 +72,6 @@ namespace school.Controllers
             {
                 ModelState.AddModelError("", "Có lỗi trong quá trình xử lý vui lòng thử lại !!!");
             }
-
-            // Nếu có lỗi ModelState, hiển thị lại View với lỗi ModelState
             ViewBag.Schools = _context.Schools.ToList();
             return View(faculty);
         }

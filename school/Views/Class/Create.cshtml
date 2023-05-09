@@ -8,19 +8,19 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="ClassName" class="control-label"></label>
-                <input asp-for="ClassName" class="form-control" />
+                <input asp-for="ClassName" class="form-control" required/>
                 <span asp-validation-for="ClassName" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Capacity" class="control-label"></label>
-                <input asp-for="Capacity" class="form-control" />
+                <input asp-for="Capacity" class="form-control" required />
                 <span asp-validation-for="Capacity" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Faculty.SchoolId" class="control-label">School</label>
-                <select asp-for="Faculty.SchoolId" class="form-control" id="SchoolId">
+                <select asp-for="Faculty.SchoolId" class="form-control" required id="SchoolId">
                     <option value="">choose School</option>
                     @foreach (var school in (IEnumerable<School>)ViewBag.Schools)
                     {
@@ -33,7 +33,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="FacultyId" class="control-label">Faculty</label>
-                <select asp-for="FacultyId" class="form-control" id="FacultyId"></select>
+                <select asp-for="FacultyId" class="form-control" id="FacultyId" required></select>
             </div>
         </div>
     </div>

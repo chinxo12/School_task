@@ -11,9 +11,10 @@ namespace school.Models
         public int FacultyId { get; set; }
        
         [DisplayName("Khoa")]
-
+        [MaxLength(100)]
         public string FacultyName { get; set; }
         [DisplayName("Sức chứa")]
+        [Range(0, 1000)]
         public int Capacity { get; set; }
         [DisplayName("Ngày tạo")]
         public DateTime CreatedDate { get; set; }

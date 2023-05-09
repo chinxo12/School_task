@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using school.Data;
 using school.Models;
-using System.Security.Claims;
 using X.PagedList;
 
 namespace school.Controllers
@@ -82,10 +81,10 @@ namespace school.Controllers
         {
             try
             {
-                var @class = _context.Classes.Find(id);
-                var faculty = _context.Faculties.Find(@class.FacultyId);
-                @class.Faculty = faculty;
-                return View(@class);
+                var _class = _context.Classes.Find(id);
+                var faculty = _context.Faculties.Find(_class.FacultyId);
+                _class.Faculty = faculty;
+                return View(_class);
 
             }
             catch (Exception e)
@@ -101,14 +100,14 @@ namespace school.Controllers
 
             try
             {
-                Class @class = _context.Classes.Find(id);
-                if (@class == null)
+                Class _class = _context.Classes.Find(id);
+                if (_class == null)
                 {
                     return NotFound();
                 }
 
                 ViewBag.Faculty = _context.Faculties;
-                return View(@class);
+                return View(_class);
             }
             catch (Exception e)
             {
@@ -119,7 +118,7 @@ namespace school.Controllers
 
 
         [HttpPost]
-        public IActionResult Edit(int id, Class @class, int facultyId)
+        public IActionResult Edit(int id, Class _class, int facultyId)
         {
             try
             {
@@ -135,14 +134,14 @@ namespace school.Controllers
                 }
                 classToUpdate.Faculty = faculty;
 
-                classToUpdate.ClassName = @class.ClassName;
+                classToUpdate.ClassName = _class.ClassName;
 
                 var totalCapacity = _context.Classes
                                     .Where(c => c.FacultyId == faculty.FacultyId)
                                     .Sum(c => c.Capacity);
 
                 // Kiểm tra tổng sức chứa của lớp với sức chứa của khoa
-                if (faculty.Capacity < totalCapacity + @class.Capacity)
+                if (faculty.Capacity < totalCapacity + _class.Capacity)
                 {
                     return NotFound("Sức chứa của lớp không được vượt quá sức chứa của khoa!");
                 }
@@ -161,16 +160,16 @@ namespace school.Controllers
         {
             try
             {
-                Class @class = _context.Classes.Find(id);
+                Class _class = _context.Classes.Find(id);
 
                 // Kiểm tra lớp học có tồn tại không
-                if (@class == null)
+                if (_class == null)
                 {
                     return NotFound();
                 }
 
                 // Truyền dữ liệu lớp học vào View để hiển thị
-                return View(@class);
+                return View(_class);
             }
             catch (Exception e)
             {
