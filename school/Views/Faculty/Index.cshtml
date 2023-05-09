@@ -1,4 +1,6 @@
-﻿@model IEnumerable<school.Models.Faculty>
+﻿@model X.PagedList.IPagedList<school.Models.Faculty>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
 
 <h2>Faculty List</h2>
 <div>
@@ -43,3 +45,10 @@
         }
     </tbody>
 </table>
+<div class="d-flex justify-content-center my-3">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @Html.PagedListPager(Model, page => Url.Action("Index",new {page=page}), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-item" }, PageClasses = new string[] { "page-link" }, UlElementClasses = new string[] { "pagination" } })
+        </ul>
+    </nav>
+</div>

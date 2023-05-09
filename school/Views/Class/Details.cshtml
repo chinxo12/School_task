@@ -39,7 +39,9 @@
     </dl>
 </div>
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.FacultyId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="btn-group">
+     <form asp-action="Edit" asp-route-id="@Model.ClassId" method="get">
+                            <button type="submit" class="btn btn-warning">Edit</button>
+      </form>
+     <button type="button" class="btn btn-secondary"  onclick="location.href='@Url.Action("Index")'">Back to List</button>
 </div>

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using school.Data;
 using school.Models;
+using X.PagedList;
 
 namespace school.Controllers
 {
@@ -15,9 +16,11 @@ namespace school.Controllers
 
 
 
-        public IActionResult Index()
+        public IActionResult Index(int page =1)
         {
-            var facultys = _context.Faculties.Include(f => f.School).ToList();
+            int pageSize = 10;
+            var facultys = _context.Faculties.Include(f => f.School).OrderBy(f => f.FacultyId).ToPagedList(page,pageSize);
+   
 
             return View(facultys);
         }

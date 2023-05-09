@@ -24,9 +24,7 @@ namespace school.Controllers
            
             return View(_classes);
 
-           /* var classes = _context.Classes.Include(c => c.Faculty).ToList();
-
-            return View(classes);*/
+      
         }
 
         public IActionResult Create()
