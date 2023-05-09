@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<school.Models.Faculty>
 
 <h2>Faculty List</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div>
+    <button type="button" class="btn btn-primary"  onclick="location.href='@Url.Action("Create")'">Create New</button>
+</div>
+ 
 
 <table class="table">
     <thead>
@@ -27,9 +27,17 @@
                 <td>@Html.DisplayFor(modelItem => item.School.SchoolName)</td>
                 <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.FacultyId }) |
-                    @Html.ActionLink("Edit", "Edit", new { id = item.FacultyId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.FacultyId })
+                     <div class="btn-group">
+                            <form asp-action="Details" asp-route-id="@item.FacultyId" method="get">
+                                <button type="submit" class="btn btn-primary">Details</button>
+                            </form>
+                            <form asp-action="Edit" asp-route-id="@item.FacultyId" method="get">
+                                <button type="submit" class="btn btn-warning">Edit</button>
+                            </form>
+                            <form asp-action="Delete" asp-route-id="@item.FacultyId" method="get" >
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                    </div>
                 </td>
             </tr>
         }

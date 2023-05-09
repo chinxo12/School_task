@@ -17,9 +17,10 @@ namespace school.Controllers
 
         public IActionResult Index(int page=1)
         {
-          /*  int pageSize = 10;
-            var schools = _context.Schools.OrderBy(x => x.SchoolId).ToPagedList(page,pageSize);*/
-            return View(_context.Schools);
+            int pageSize = 10;
+            var schools = _context.Schools.OrderBy(x => x.SchoolId).ToPagedList(page, pageSize);
+            return View(schools);
+            /*return View(_context.Schools);*/
         }
 
 
@@ -32,7 +33,7 @@ namespace school.Controllers
         [HttpPost]
         public IActionResult Create(School school)
         {
-            var creator = _context.Users.First();
+            var creator = _context.Users.Where(u => u.RoleId == 1).First();
             school.Creator = creator;
             school.CreatorId = creator.UserId;
             

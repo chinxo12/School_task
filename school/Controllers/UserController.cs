@@ -55,7 +55,8 @@ namespace school.Controllers
             {
                 return NotFound();
             }
-
+            Faculty faculty = _context.Faculties.Find(classs.FacultyId);
+            School school = _context.Schools.Find(faculty.SchoolId);
 
             // kiểm tra xem số lượng hiện tại của School.
             var result = _context.Users
@@ -67,7 +68,7 @@ namespace school.Controllers
 
             foreach (var item in result)
             {
-                if (item.SchoolId == user.Class.Faculty.SchoolId)
+                if (item.SchoolId == school.SchoolId)
                 {
                     count = item.Count;
                 }
@@ -79,19 +80,22 @@ namespace school.Controllers
                           select new { FacultyId = g.Key, Count = g.Count() };
             foreach (var item in result1)
             {
-                if (item.FacultyId == user.Class.FacultyId)
+                if (item.FacultyId == faculty.FacultyId)
                 {
                     countF = item.Count;
                 }
             }
 
+           
+            
 
-            if (count > user.Class.Faculty.School.Capacity || countF > user.Class.Faculty.Capacity)
+            if (count > school.Capacity || countF > faculty.Capacity)
             {
                 check = false;
             }
             if (check)
             {
+                user.Password = "123";
                 _context.Users.Add(user);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
@@ -112,8 +116,10 @@ namespace school.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.Class = _context.Classes;
             User user = _context.Users.Find(id);
+            Class c = _context.Classes.Find(user.ClassId);
+            user.Class = c;
             if (user == null)
             {
                 return NotFound();
@@ -126,18 +132,33 @@ namespace school.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, User user)
         {
-            if (id != user.UserId)
+            try
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                _context.Update(user);
+                User updateUser = _context.Users.Find(id);
+                Class _class = _context.Classes.Find(user.ClassId);
+                int countF = 0;
+                var result1 = from u in _context.Users
+                              group u by u.ClassId into g
+                              select new { ClassId = g.Key, Count = g.Count() };
+                foreach (var item in result1)
+                {
+                    if (item.ClassId == user.ClassId)
+                    {
+                        countF = item.Count;
+                    }
+                }
+                if (countF + 1 > _class.Capacity) 
+                {
+                    return NotFound("Vượt quá sức chứa của lớp");
+                }
+                updateUser.Class = _class;
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
-            return View(user);
+            catch (Exception ex)
+            {
+                return NotFound("Có lỗi trong quá trình xử lý vui lòng thử lại!");
+            }
         }
 
 
@@ -158,11 +179,11 @@ namespace school.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             User user = _context.Users.Find(id);
-            _context.Users.Remove(user);
+            user.IsDeleted = true;
+          
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
