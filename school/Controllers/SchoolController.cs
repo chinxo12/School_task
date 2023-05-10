@@ -15,7 +15,7 @@ namespace school.Controllers
         }
 
 
-        public IActionResult Index(int page=1)
+        public IActionResult Index(int page = 1)
         {
             int pageSize = 10;
             var schools = _context.Schools.OrderBy(x => x.SchoolId).ToPagedList(page, pageSize);
@@ -33,40 +33,48 @@ namespace school.Controllers
         [HttpPost]
         public IActionResult Create(School school)
         {
+            bool check = true;
             var creator = _context.Users.Where(u => u.RoleId == 1).First();
             school.Creator = creator;
             school.CreatorId = creator.UserId;
-            
-                if (school.Capacity <= 1000)
+
+
+            try
+            {
+                if (school.Capacity > 1000)
                 {
-                    try
-                    {
-                        school.FoundedTime = DateTime.Now;
-                        _context.Schools.Add(school);
-
-                        _context.SaveChanges(); 
-
-                        return RedirectToAction("Index");
-                    }
-                    catch (Exception ex) { 
-                        return NotFound("Có lỗi trong quá trình xử lý vui lòng thử lại!!!");
-                    }
-
+                    ModelState.AddModelError("Capacity","Sức chứa của trường không được vượt quá 1000!!!");
+                    check = false;
                 }
-                else
+                if (check)
                 {
-                    return NotFound("Sức chứa của trường không được vượt quá 1000!!!");
-                }              
-            
-          
+                    school.FoundedTime = DateTime.Now;
+                    _context.Schools.Add(school);
+
+                    _context.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return NotFound("Có lỗi trong quá trình xử lý vui lòng thử lại!!!");
+            }
+
+
+
+
+            return View(school);
+
         }
 
-      
+
         public IActionResult Details(int id)
         {
             if (id == null)
             {
-                return NotFound() ;
+                return NotFound();
             }
 
             try
@@ -88,10 +96,10 @@ namespace school.Controllers
                 return NotFound("Có lỗi trong quá trình xử lý vui lòng thử lại!!!");
             }
 
-          
+
         }
 
-       
+
         public IActionResult Edit(int id)
         {
 
@@ -109,7 +117,7 @@ namespace school.Controllers
                     return NotFound();
                 }
 
-      
+
                 return View(school);
 
             }
@@ -117,6 +125,7 @@ namespace school.Controllers
             {
                 return NotFound("Có lỗi trong quá trình xử lý vui lòng thử lại!!!");
             }
+          
         }
 
         [HttpPost]
@@ -124,26 +133,28 @@ namespace school.Controllers
         {
             try
             {
+                bool check = true;
                 School existingSchool = _context.Schools.Find(id);
 
                 if (existingSchool == null)
                 {
-                    return NotFound();
+                    return NotFound("Không tồn tại trường này !");
                 }
 
-                if (school.Capacity <= 1000)
+                if (school.Capacity > 1000)
+                {
+                   ModelState.AddModelError("Capacity","Sức chứa của trường không được vượt quá 1000!!!");
+                    check = false;
+                }
+                if (check)
                 {
                     existingSchool.SchoolName = school.SchoolName;
                     existingSchool.Address = school.Address;
                     existingSchool.Capacity = school.Capacity;
 
-                    _context.SaveChanges(); 
+                    _context.SaveChanges();
 
                     return RedirectToAction("Index");
-                }
-                else
-                {
-                    return NotFound("Sức chứa của trường không được vượt quá 1000!!!");
                 }
 
             }
@@ -151,6 +162,7 @@ namespace school.Controllers
             {
                 return NotFound("Có lỗi trong quá trình xử lý vui lòng thử lại!!!");
             }
+            return View(school);
         }
 
         public IActionResult Delete(int id)
@@ -183,28 +195,28 @@ namespace school.Controllers
         [HttpPost]
         public IActionResult Delete(int id, bool confirm)
         {
-           
+
             try
             {
-               
-                    School school = _context.Schools.Find(id);
-                    if (school == null)
-                    {
-                        return NotFound();
-                    }
-                    _context.Schools.Remove(school);
-                    _context.SaveChanges();
+
+                School school = _context.Schools.Find(id);
+                if (school == null)
+                {
+                    return NotFound();
+                }
+                _context.Schools.Remove(school);
+                _context.SaveChanges();
 
 
-                
+
                 return RedirectToAction("Index");
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return NotFound("Có lỗi trong quá trình xử lý vui lòng thử lại!!!");
             }
-         
+
         }
 
 

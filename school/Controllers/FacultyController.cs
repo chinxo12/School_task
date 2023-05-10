@@ -39,6 +39,7 @@ namespace school.Controllers
         {
             try
             {
+                bool check = true;
                 School school = _context.Schools.Find(schoolId);
                 if (school != null)
                 {
@@ -46,7 +47,22 @@ namespace school.Controllers
                         .Where(c => c.SchoolId == school.SchoolId)
                         .Sum(c => c.Capacity);
 
-                    if (school.Capacity > total + faculty.Capacity)
+                    if (school.Capacity < total + faculty.Capacity)
+                    {
+                        ModelState.AddModelError("Capacity", "Sức chứa của khoa không được lớn hơn sức chứa của trường !!!");
+                    }
+                    var facultys = _context.Faculties.Where(f => f.SchoolId==schoolId).ToList();
+                    foreach(var f in facultys)
+                    {
+                        if (f.FacultyName.Equals(faculty.FacultyName))
+                        {
+                            ModelState.AddModelError("FacultyName", "Tên khoa đã tồn tại trong trường này!");
+                            check = false;
+                            break;
+                        }
+                    }
+
+                    if (check)
                     {
                         faculty.School = school;
                         faculty.SchoolId = schoolId;
@@ -58,14 +74,11 @@ namespace school.Controllers
 
                         return RedirectToAction("Index");
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "Sức chứa của khoa không được lớn hơn sức chứa của trường !!!");
-                    }
+                    
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Thông tin trường vừa nhập không tồn tại!");
+                    ModelState.AddModelError("SchoolId", "Thông tin trường vừa nhập không tồn tại!");
                 }
             }
             catch (Exception ex)
@@ -124,30 +137,46 @@ namespace school.Controllers
         {
             try
             {
+                bool check = true;
                 School school = _context.Schools.Find(schoolId);
                 if (school == null)
                 {
-                    return NotFound();
+                    ModelState.AddModelError("SchoolId", "Trường không hợp lệ hoặc không tồn tại");
+                }
+                var facultys = _context.Faculties.Where(f => f.SchoolId == schoolId).ToList();
+                foreach (var f in facultys)
+                {
+                    if (f.FacultyName.Equals(faculty.FacultyName))
+                    {
+                        ModelState.AddModelError("FacultyName", "Tên khoa đã tồn tại trong trường này!");
+                        check = false;
+                        break;
+                    }
+                }
+                if (faculty.Capacity < 0)
+                {
+                    ModelState.AddModelError("Capacity", "Vui lòng nhập sức chứa lớn hơn 0");
+                    check = false;
                 }
                 Faculty facultyToUpdate = _context.Faculties.Find(id);
                 int total = _context.Faculties
                                    .Where(c => c.SchoolId == school.SchoolId)
                                    .Sum(c => c.Capacity);
-                if (total - facultyToUpdate.Capacity + faculty.Capacity < facultyToUpdate.School.Capacity)
+                if (total - facultyToUpdate.Capacity + faculty.Capacity > facultyToUpdate.School.Capacity)
                 {
-
+                    ModelState.AddModelError("Capacity", "Sức chứa của khoa không được vượt quá sức chứa của trường");
+                   
+                }
+                if (check)
+                {
                     if (facultyToUpdate == null)
                     {
-                        return NotFound();
+                        return NotFound("Không tìm thấy khoa này!");
                     }
                     facultyToUpdate.FacultyName = faculty.FacultyName;
                     facultyToUpdate.Capacity = faculty.Capacity;
                     facultyToUpdate.School = school;
                     return RedirectToAction("Index");
-                }
-                else
-                {
-                    return NotFound("Sức chứa của khoa không được vượt quá sức chứa của trường");
                 }
 
             }
@@ -156,6 +185,8 @@ namespace school.Controllers
                 return NotFound("Có lỗi trong quá trình xử lý vui lòng thử lại !!!");
             }
 
+            ViewBag.Schools = _context.Schools;
+            return View(faculty);
 
         }
 

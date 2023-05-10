@@ -16,14 +16,14 @@ namespace school.Controllers
         }
 
 
-        public IActionResult Index(int page=1)
+        public IActionResult Index(int page = 1)
         {
             int pageSize = 3;
             var _classes = _context.Classes.Include(c => c.Faculty).OrderBy(x => x.ClassId).ToPagedList(page, pageSize);
-           
+
             return View(_classes);
 
-      
+
         }
 
         public IActionResult Create()
@@ -40,6 +40,7 @@ namespace school.Controllers
 
             try
             {
+                bool check = true;
                 Faculty faculty = _context.Faculties.Find(facultyId);
                 if (faculty != null)
                 {
@@ -48,23 +49,47 @@ namespace school.Controllers
                     var totalCapacity = _context.Classes
                                         .Where(c => c.FacultyId == faculty.FacultyId)
                                         .Sum(c => c.Capacity);
+
+                    if (_class.Capacity <= 0)
+                    {
+                        ModelState.AddModelError("Capacity", "Vui lòng nhập sức chứa lớn hơn 0");
+                        check = false;
+                    }
+
+                    var classes = _context.Classes
+                                  .Where(c => c.Faculty.SchoolId == faculty.SchoolId)
+                                  .ToList();
+
+                    foreach (var c in classes)
+                    {
+                        if (c.ClassName.Equals(_class.ClassName))
+                        {
+                            ModelState.AddModelError("ClassName", "Tên lớp đã tồn tại trong Trường này!");
+                            check = false;
+                            break;
+                        }
+                    }
                     // Kiểm tra tổng sức chứa của lớp và khoa
 
                     if (faculty.Capacity < totalCapacity + _class.Capacity)
                     {
-                        return NotFound("Sức chứa của lớp không được vượt quá sức chứa của khoa!");
+                        ModelState.AddModelError("Capacity", "Sức chứa của lớp không được vượt quá sức chứa của khoa");
+                        check = false;
                     }
-                    var creator = _context.Users.First();
-                    _class.CreatedDate = creator.CreatedDate;
-                    _class.CreatorId = creator.CreatorId;
-                    
-                    _context.Classes.Add(_class);
-                    _context.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (check)
+                    {
+                        var creator = _context.Users.First();
+                        _class.CreatedDate = DateTime.Now;
+                        _class.CreatorId = creator.CreatorId;
+                        _context.Classes.Add(_class);
+                        _context.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+
                 }
                 else
                 {
-                    return NotFound("Khoa không tồn tại!");
+                    ModelState.AddModelError("FacultyId", "Khoa không tồn tại");
                 }
 
 
@@ -72,9 +97,13 @@ namespace school.Controllers
             }
             catch (Exception e)
             {
+
                 return NotFound("có lỗi trong quá trình xử lý vui lòng thử lại!");
             }
-           
+
+            ViewBag.Schools = _context.Schools;
+            return View(_class);
+
         }
 
         public IActionResult Details(int id)
@@ -122,36 +151,57 @@ namespace school.Controllers
         {
             try
             {
+                bool check = true;
                 Class classToUpdate = _context.Classes.Find(id);
                 if (classToUpdate == null)
                 {
-                    return NotFound();
+                    return NotFound("Không tồn tại lớp này");
                 }
                 Faculty faculty = _context.Faculties.Find(facultyId);
                 if (faculty == null)
                 {
-                    return NotFound("Khôn tồn tại khoa này!");
+                    ModelState.AddModelError("FacultyId", "Khoa không tồn tại");
+                    check = false;
                 }
-                classToUpdate.Faculty = faculty;
-
-                classToUpdate.ClassName = _class.ClassName;
-
+                if (!_class.ClassName.Equals(classToUpdate.ClassName))
+                {
+                    var classes = _context.Classes.Where(x => x.FacultyId == facultyId).ToList();
+                    foreach (var c in classes)
+                    {
+                        if (c.ClassName.Equals(_class.ClassName))
+                        {
+                            ModelState.AddModelError("ClassName", "Tên lớp đã tồn tại trong khoa này!");
+                            check = false;
+                            break;
+                        }
+                    }
+                }
                 var totalCapacity = _context.Classes
-                                    .Where(c => c.FacultyId == faculty.FacultyId)
-                                    .Sum(c => c.Capacity);
+                                   .Where(c => c.FacultyId == faculty.FacultyId)
+                                   .Sum(c => c.Capacity);
 
                 // Kiểm tra tổng sức chứa của lớp với sức chứa của khoa
                 if (faculty.Capacity < totalCapacity + _class.Capacity)
                 {
-                    return NotFound("Sức chứa của lớp không được vượt quá sức chứa của khoa!");
+                    ModelState.AddModelError("Capacity", "Sức chứa của lớp không được vượt quá sức chứa của khoa");
                 }
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                if (check)
+                {
+                    classToUpdate.Faculty = faculty;
+
+                    classToUpdate.ClassName = _class.ClassName;
+
+
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
             }
             catch (Exception e)
             {
                 return NotFound("có lỗi trong quá trình xử lý vui lòng thử lại!");
             }
+            return View(_class);
 
         }
 
@@ -191,10 +241,10 @@ namespace school.Controllers
                 {
                     return NotFound();
                 }
-                
-                    _context.Classes.Remove(@class);
-                    _context.SaveChanges();
-                
+
+                _context.Classes.Remove(@class);
+                _context.SaveChanges();
+
 
 
                 return RedirectToAction("Index");

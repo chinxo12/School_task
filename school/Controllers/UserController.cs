@@ -37,75 +37,85 @@ namespace school.Controllers
         public IActionResult Create(int classId, User user)
         {
 
-
-            var role = _context.Roles.Find(3);
-            user.Role = role;
-            user.RoleId = 3;
-            bool check = true;
-            int count = 0;
-            int countF = 0;
-            user.CreatedDate = DateTime.Now;
-            user.IsDeleted = false;
-            Class classs = _context.Classes.Find(classId);
-            if (classs.ClassId == classId)
+            try
             {
-                user.Class = classs;
-            }
-            else
-            {
-                return NotFound();
-            }
-            Faculty faculty = _context.Faculties.Find(classs.FacultyId);
-            School school = _context.Schools.Find(faculty.SchoolId);
-
-            // kiểm tra xem số lượng hiện tại của School.
-            var result = _context.Users
-                    .Join(_context.Classes, u => u.ClassId, c => c.ClassId, (u, c) => new { User = u, Class = c })
-                    .Join(_context.Faculties, uc => uc.Class.FacultyId, f => f.FacultyId, (uc, f) => new { UserClass = uc, Faculty = f })
-                    .GroupBy(fc => fc.Faculty.SchoolId)
-                    .Select(g => new { SchoolId = g.Key, Count = g.Count() })
-                    .ToList();
-
-            foreach (var item in result)
-            {
-                if (item.SchoolId == school.SchoolId)
+                var role = _context.Roles.Find(3);
+                user.Role = role;
+                user.RoleId = 3;
+                bool check = true;
+                int count = 0;
+                int countF = 0;
+                user.CreatedDate = DateTime.Now;
+                user.IsDeleted = false;
+                Class classs = _context.Classes.Find(classId);
+                if (classs.ClassId == classId)
                 {
-                    count = item.Count;
+                    user.Class = classs;
                 }
-            }
-            // Kiểm tra số lượng hiện tại của Khoa
-            var result1 = from u in _context.Users
-                          join c in _context.Classes on u.ClassId equals c.ClassId
-                          group u by c.FacultyId into g
-                          select new { FacultyId = g.Key, Count = g.Count() };
-            foreach (var item in result1)
-            {
-                if (item.FacultyId == faculty.FacultyId)
+                else
                 {
-                    countF = item.Count;
+                    ModelState.AddModelError("ClassId", "Lớp không tồn tại!");
                 }
+              /*  Faculty faculty = _context.Faculties.Find(classs.FacultyId);
+                School school = _context.Schools.Find(faculty.SchoolId);*/
+
+                // kiểm tra xem số lượng hiện tại của School.
+                /*var result = _context.Users
+                        .Join(_context.Classes, u => u.ClassId, c => c.ClassId, (u, c) => new { User = u, Class = c })
+                        .Join(_context.Faculties, uc => uc.Class.FacultyId, f => f.FacultyId, (uc, f) => new { UserClass = uc, Faculty = f })
+                        .GroupBy(fc => fc.Faculty.SchoolId)
+                        .Select(g => new { SchoolId = g.Key, Count = g.Count() })
+                        .ToList();
+
+                foreach (var item in result)
+                {
+                    if (item.SchoolId == school.SchoolId)
+                    {
+                        count = item.Count;
+                    }
+                }
+                // Kiểm tra số lượng hiện tại của Khoa
+                var result1 = from u in _context.Users
+                              join c in _context.Classes on u.ClassId equals c.ClassId
+                              group u by c.FacultyId into g
+                              select new { FacultyId = g.Key, Count = g.Count() };
+                foreach (var item in result1)
+                {
+                    if (item.FacultyId == faculty.FacultyId)
+                    {
+                        countF = item.Count;
+                    }
+                }
+
+
+
+
+                if (count > school.Capacity)
+                {
+                    check = false;
+                    ModelState.AddModelError("ClassId", "Số lượng sinh viên hiện tại của trường vượt quá sức chứa!");
+                }
+                if (countF > faculty.Capacity)
+                {
+                    check = false;
+                    ModelState.AddModelError("ClassId", "Số lượng sinh viên hiện tại của khoa vượt quá sức chứa!");
+                }*/
+                if (check)
+                {
+                    user.Password = "123";
+                    _context.Users.Add(user);
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
+               
             }
-
-           
-            
-
-            if (count > school.Capacity || countF > faculty.Capacity)
+            catch(Exception ex)
             {
-                check = false;
-            }
-            if (check)
-            {
-                user.Password = "123";
-                _context.Users.Add(user);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                return NotFound();
+                return NotFound("Có lỗi trong quá trình xử lý vui lòng thử lại!");
             }
 
 
+            return View(user);
            
         }
 
