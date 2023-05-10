@@ -8,12 +8,13 @@ namespace school.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SchoolId { get; set; }
-        [MaxLength(50)]
+        [MaxLength(100,ErrorMessage ="Tên quá dài!")]
+        
         public string SchoolName { get; set; }
         public DateTime FoundedTime { get; set; }
-        
+        [Range(1,1000, ErrorMessage = "Vui lòng nhập từ 1-1000!")]
         public int Capacity { get; set; }
-        [MaxLength(255)]
+        [MaxLength(255,ErrorMessage ="Địa chỉ quá dài!")]
         public string Address { get; set; }
         public int CreatorId { get; set; }
         [ForeignKey("CreatorId")]

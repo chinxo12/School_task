@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using school.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace school.Data
 {
@@ -40,7 +41,9 @@ namespace school.Data
             modelBuilder.Entity<School>().HasIndex(f => f.SchoolName).IsUnique();
             modelBuilder.Entity<Faculty>().HasIndex(f => new { f.FacultyName, f.SchoolId }).IsUnique();
             modelBuilder.Entity<Class>().HasIndex(f => new { f.ClassName, f.FacultyId }).IsUnique();
-
+            modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
+            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+            
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -11,7 +11,7 @@ namespace school.Models
         public int FacultyId { get; set; }
        
         [DisplayName("Khoa")]
-        [MaxLength(100)]
+        [MaxLength(50, ErrorMessage = "Tên không được vượt quá 50 ký tự!")]
         public string FacultyName { get; set; }
         [DisplayName("Sức chứa")]
         [Range(0, 1000)]
